@@ -32,9 +32,6 @@ $ npm run test:cov
 
 ## GIT COMMIT MESSAGE CONVENTION
 
-(출처)
-https://overcome-the-limits.tistory.com/entry/%ED%98%91%EC%97%85-%ED%98%91%EC%97%85%EC%9D%84-%EC%9C%84%ED%95%9C-%EA%B8%B0%EB%B3%B8%EC%A0%81%EC%9D%B8-git-%EC%BB%A4%EB%B0%8B%EC%BB%A8%EB%B2%A4%EC%85%98-%EC%84%A4%EC%A0%95%ED%95%98%EA%B8%B0
-
 ### 1. 커밋 메세지 구조
 
 type : subject
@@ -93,8 +90,6 @@ Fix (database)
   - Related to : 해당 커밋에 관련된 이슈번호 (아직 해결 못함)
 
 ### 6. 예시 (example)
-
-1.
 
 🐛 fix: fix foo to enable bar
 
