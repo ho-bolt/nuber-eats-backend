@@ -1,31 +1,3 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
-
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
 ## Installation
 
 ```bash
@@ -58,16 +30,85 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-## Support
+## GIT COMMIT MESSAGE CONVENTION
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+(출처)
+https://overcome-the-limits.tistory.com/entry/%ED%98%91%EC%97%85-%ED%98%91%EC%97%85%EC%9D%84-%EC%9C%84%ED%95%9C-%EA%B8%B0%EB%B3%B8%EC%A0%81%EC%9D%B8-git-%EC%BB%A4%EB%B0%8B%EC%BB%A8%EB%B2%A4%EC%85%98-%EC%84%A4%EC%A0%95%ED%95%98%EA%B8%B0
 
-## Stay in touch
+### 1. 커밋 메세지 구조
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+type : subject
 
-## License
+body
 
-Nest is [MIT licensed](LICENSE).
+footer
+
+### 2. 커밋 타입
+
+| 기능 이모지 | 기능 이름        | 기능설명                                         |
+| ----------- | ---------------- | ------------------------------------------------ |
+| ✨          | Feat             | 새로운 기능 추가                                 |
+| 🐛          | Fix              | 버그 수정                                        |
+| 📱          | Design           | css 등 사용자 UI 디자인 변경                     |
+| 💥          | !Breaking change | 커다란 api 변경                                  |
+| 🚑️         | !Hotfix          | 급하게 치명적인 버그 고치는 경우                 |
+| 📝          | Docs             | 문서 수정                                        |
+| 💄          | Style            | 코드 포멧팅, 세미 콜론 누락, 코드 변경 없는 경우 |
+| ♻️          | Refactor         | 코드 리펙토링                                    |
+| 🧪          | Test             | 테스트 코드, 리펙토링 테스트 코드 추가           |
+| 🚧          | Chore            | 빌드 업무 수정 , 패키지 매니저 수정              |
+| 💡          | Comment          | 필요한 주석 추가 및 변경                         |
+| 🚚          | Rename           | 파일 혹은 폴더명 수정하거나 옮기는 작업          |
+| 🔥          | Remove           | 파일 삭제                                        |
+
+-> 이렇게 태그 뒤에는 ":" 붙여서 제목과 구별한다.
+
+추가적인 문맥 정보 위해 괄호안에 적음
+ex) Feat (navigation)
+Fix (database)
+
+### 3. 주제
+
+- 제목은 50자 넘지 않고 대문자로 작성하고 마침표를 붙이지 않는다.
+- 과거 시제 사용말고 명령어로 작성
+  - FIXED -> FIX
+  - ADDED -> ADD
+
+### 4. 본문(바디)
+
+- 선택사항이라 모든 커밋에 본문내용 작성할 필욘 없음
+- 부연설명 필요하거나 커밋의 이유 설명할 경우 작성
+- 72자 넘지 않도록 하고 제목과 구분되기 위해 한 칸 띄워 작성
+
+### 5. 푸터 (FOOTER)
+
+- 선택사항이라 모든 커밋에 꼬리말을 작성할 필욘 없음
+- issue tracker id 작성할 때 사용
+- 유형 # 이슈 번호 형식으로 작성
+- 여러 개의 이슈번호는 쉼표로 구분
+- 이슈 트래커 유형
+  - Fixes : 이슈 수정중 (아직 해결 못함)
+  - Resolves : 이슈 해결
+  - Ref : 참고할 이슈 있을 때 사용
+  - Related to : 해당 커밋에 관련된 이슈번호 (아직 해결 못함)
+
+### 6. 예시 (example)
+
+1.
+
+🐛 fix: fix foo to enable bar
+
+This fixes the broken behavior of the component by doing xyz.
+
+BREAKING CHANGE
+Before this fix foo wasn't enabled at all, behavior changes from <old> to <new>
+
+Closes D2IQ-12345
+
+✨ Feat: 회원 가입 기능 구현
+
+SMS, 이메일 중복확인 API 개발
+
+Resolves: #123
+Ref: #456
+Related to: #48, #45
