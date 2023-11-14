@@ -3,11 +3,12 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ApolloDriverConfig, ApolloDriver } from '@nestjs/apollo';
 import { GraphQLModule } from '@nestjs/graphql';
-import { RestaurantsModule } from './restaurants/restaurants.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
-import { Restaurant } from './restaurants/entities/restaurant.entity';
+import { UsersModule } from './users/users.module';
+import { CommonModule } from './common/common.module';
+import { User } from './users/entities/users.entity';
 // javascript 패키지를 import from 으로 사용하는 방법
 
 @Module({
@@ -16,7 +17,6 @@ import { Restaurant } from './restaurants/entities/restaurant.entity';
       driver: ApolloDriver,
       autoSchemaFile: true,
     }),
-    RestaurantsModule,
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: process.env.NODE_ENV === 'dev' ? '.env.dev' : '.env.test',
@@ -38,11 +38,26 @@ import { Restaurant } from './restaurants/entities/restaurant.entity';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
       synchronize: process.env.NODE_ENV !== 'prod', // typeOrm이 계속 entity를 동기화 시킴 따라서 개발할 때만 동기화 시키고 아닐때는 동기화 방지
-      logging: true,
-      entities: [Restaurant],
+      logging: process.env.NODE_ENV !== 'prod',
+      entities: [User],
     }),
+    UsersModule,
+    CommonModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
+
+/*
+Data Mapper  pattern
+
+Respository 사용 
+-> Entity랑 상호작용하는 걸 담당
+-> Entity랑 실제로 상호작용하는 Repository만 추가적으로 필요 
+Data Mapper는 대규모 앱에서 데이터를 유지관리하는데 도움이 된다. 
+
+Active Record는 소규모 앱에서 단순하게 사용할 수 있도록 도와준다. 
+
+
+*/
