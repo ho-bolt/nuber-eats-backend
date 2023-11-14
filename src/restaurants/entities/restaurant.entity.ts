@@ -1,6 +1,8 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Field, InputType, Int, ObjectType } from '@nestjs/graphql';
+import { IsBoolean, IsOptional, IsString, Length } from 'class-validator';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
+@InputType({ isAbstract: true }) // 이 inputType이 스키마에 포함되지 않길 원한다는 뜻 그리고 이걸 어딘가에서 복사해서 쓴다는 의미
 @ObjectType()
 @Entity()
 export class Restaurant {
@@ -12,22 +14,29 @@ export class Restaurant {
 
   @Field((type) => String)
   @Column()
+  @IsString()
+  @Length(5)
   name: string;
 
-  @Field((type) => Boolean)
-  @Column()
+  @Field((type) => Boolean, { defaultValue: true })
+  @Column({ default: true })
+  @IsOptional()
+  @IsBoolean()
   isVegan?: boolean;
 
   @Field((type) => String)
   @Column()
+  @IsString()
   address: string;
 
   @Field((type) => String)
   @Column()
-  ownerName: string;
+  @IsString()
+  ownersName: string;
 
   @Field((type) => String)
   @Column()
+  @IsString()
   categoryName: string;
 }
 
