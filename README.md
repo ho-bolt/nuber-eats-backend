@@ -107,3 +107,23 @@ SMS, 이메일 중복확인 API 개발
 Resolves: #123
 Ref: #456
 Related to: #48, #45
+
+#Nuber Eats
+
+The backend of Uber Eats Clone
+
+## User Entity :
+
+- id
+- createdAt
+- updatedAt
+
+- email
+- password
+- role(client, owner, delivery)
+
+## User CRUD
+
+- Create Account
+- Login
+- Logout
