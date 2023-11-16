@@ -8,9 +8,8 @@ import * as jwt from 'jsonwebtoken';
 @Injectable()
 export class JwtService {
   constructor(
-    @Inject(CONFIG_OPTIONS) private readonly options: JwtModuleOptions,
-  ) // private readonly configService: ConfigService,
-  {}
+    @Inject(CONFIG_OPTIONS) private readonly options: JwtModuleOptions, // private readonly configService: ConfigService,
+  ) {}
 
   sign(payload: object): string {
     // jwt module 사용 방법
@@ -18,5 +17,8 @@ export class JwtService {
 
     // global configService 사용 방법
     //return this.configService.get('PRIVATE_KEY');
+  }
+  verify(token: string) {
+    return jwt.verify(token, this.options.privateKey);
   }
 }

@@ -2,6 +2,7 @@ import { DynamicModule, Module, Global } from '@nestjs/common';
 import { JwtService } from './jwt.service';
 import { JwtModuleOptions } from './interfaces/jwt.interfaces';
 import { CONFIG_OPTIONS } from './jwt.constants';
+import { UsersService } from 'src/users/users.service';
 
 @Module({})
 @Global()
@@ -15,7 +16,8 @@ export class JwtModule {
           provide: CONFIG_OPTIONS,
           useValue: options,
         },
-        JwtService, // == {provide : JwtService, useValue : JwtService } 와 같다
+        JwtService,
+        // == {provide : JwtService, useValue : JwtService } 와 같다
       ],
     };
   }
