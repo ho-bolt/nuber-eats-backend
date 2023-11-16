@@ -127,3 +127,19 @@ The backend of Uber Eats Clone
 - Create Account
 - Login
 - Logout
+
+### 인증처리 순서
+
+token in header-> verify token in middleware -> apollo server context -> authorization guard -> resolver -> made decorator -> change context to graphql context
+-> get user from graphql context
+
+### 개발중 발견한 문제점들
+
+1. 프로필 업데이트 시 비밀번호 해쉬화
+   - 프로필 업데이트할 때에는 이미 로그인 되어있다 판단하여 db에서 유저를 찾지 않고 쿼리를 실행하여 바로 업데이트 진행
+   - 그러다 보니 바로 쿼리로 비밀번호 수정 진행
+   - @BeforeUpdate()가 먹히지 않아 비밀번호가 해쉬화 되지 않음
+   - @BeofeUpdate()는 특정 entity를 update해야 호출가능
+
+=> 해결 방법
+TypeOrm의 save() 함수는 없을 때는 entity를 생성하지만 이미 존재한다면 entity를 update 한다. 따라서 update() 함수를 save() 함수로 바꿔준다.
