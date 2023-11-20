@@ -50,7 +50,8 @@ export class UsersService {
   async login({ email, password }: LoginInput): Promise<[boolean, string?, token?: string]> {
     
     try {
-      const user = await this.users.findOne({ where: { email } })
+      const user = await this.users.findOne({ where: { email }, select: ['id', 'password'] }) // select 옵션을 주면 확실하게 그 컬럼을 넣는다. 
+                                                                                              // findOne 옵션은 select에 옵션에 넣은 컬럼만 반환하기 때문에 비밀번호 외에도 id도 넣어주어야 한다. 
       if (!user) {
         return [false, "User not found"]
       }
@@ -86,17 +87,23 @@ export class UsersService {
   }
 
   // userEmail verified true로 바꿈 
-  async verifyEmail(code:string):Promise<Boolean> {
+  async verifyEmail(code: string): Promise<Boolean> {
+    try {
+ 
     const verification = await this.verifications.findOne({ where: { code }, relations: ["user"] }) // loadRelationIds 가 true로 해야 relationships에 있는 id가 나온다
                                                                                                     // 안하면 undefined로 나옴
                                                                                                     // relations로 하면 해당 연관 엔티티 자체가 온다. relations:["user"]
 
     if (verification) {
       verification.user.verified=true
-     this.users.save(verification.user)
+      this.users.save(verification.user)
+      return true
     }
     
-    
+  } catch (e) {
+    console.log(e)
     return false
+    }
+    
   }
 }
