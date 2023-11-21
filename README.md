@@ -143,3 +143,30 @@ token in header-> verify token in middleware -> apollo server context -> authori
 
 🎈 해결 방법
 TypeOrm의 save() 함수는 없을 때는 entity를 생성하지만 이미 존재한다면 entity를 update 한다. 따라서 update() 함수를 save() 함수로 바꿔준다.
+
+### ✏ 메모할 거
+
+#### 테스트 코드
+
+1. MockRepository
+
+```
+type MockRepository<T = any> = Partial<Record<keyof Repository<T>, jest.Mock>>;
+
+```
+
+: keyOf Repository로 해당 리포지토리가 가지고 있는 메서드를 추출하고 Partial로 감싸 optional 처리 한다.
+
+```
+Partial Type,
+- 특정 타입의 부분 집합을 만족하는 타입을 정의.
+
+ Pick Type
+- 특정 타입에서 몇 개의 속성을 선택해 타입을 정의.
+
+ Omit Type
+- 특정 속성만 제거한 타입 정의 (pick 반대 )
+
+typeof : 객체 데이터를 객체 타입으로 변환
+
+```
