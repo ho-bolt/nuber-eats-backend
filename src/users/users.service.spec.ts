@@ -6,7 +6,6 @@ import { Verification } from './entities/verification.entity';
 import { JwtService } from 'src/jwt/jwt.service';
 import { MailService } from 'src/mail/mail.service';
 import { Repository } from 'typeorm';
-import { sign } from 'crypto';
 
 // fn 은 userRepository 에서 사용한 함수를 mock 함수로 만드는 것
 
@@ -14,6 +13,7 @@ const mockRepository = () => ({
   findOne: jest.fn(),
   save: jest.fn(),
   create: jest.fn(),
+  findOneOrFail: jest.fn(),
 });
 const mockJwtService = {
   sign: jest.fn(() => 'signedToken'),
@@ -168,7 +168,24 @@ describe('UserService', () => {
       expect(result).toEqual({ ok: false, error: 'Could not login' });
     });
   });
-  it.todo('findById');
+  describe('findById', () => {
+    const findByIdArgs = {
+      id: 1,
+    };
+
+    it('should find an existing User', async () => {
+      userRepository.findOneOrFail.mockResolvedValue(findByIdArgs);
+      const result = await service.findById(1);
+      console.log('!!1', result);
+      expect(result).toEqual({ ok: true, user: findByIdArgs });
+    });
+    it('should fail if no user is found', async () => {
+      userRepository.findOneOrFail.mockRejectedValue(findByIdArgs);
+      const result = await service.findById(1);
+      console.log('AAa ', result);
+      expect(result).toEqual({ ok: false, error: 'User not Found' });
+    });
+  });
   it.todo('editProfil');
   it.todo('verifyEmai');
 });
