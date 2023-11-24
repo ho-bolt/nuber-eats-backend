@@ -176,16 +176,82 @@ describe('UserService', () => {
     it('should find an existing User', async () => {
       userRepository.findOneOrFail.mockResolvedValue(findByIdArgs);
       const result = await service.findById(1);
-      console.log('!!1', result);
       expect(result).toEqual({ ok: true, user: findByIdArgs });
     });
     it('should fail if no user is found', async () => {
       userRepository.findOneOrFail.mockRejectedValue(findByIdArgs);
       const result = await service.findById(1);
-      console.log('AAa ', result);
       expect(result).toEqual({ ok: false, error: 'User not Found' });
     });
   });
-  it.todo('editProfil');
+  describe('editProfile', () => {
+    it('should change email', async () => {
+      const oldUser = {
+        email: '1234@naver.com',
+        verified: true,
+      };
+      const editProfileArgs = {
+        userId: 1,
+        input: { email: 'abcd@naver.com' },
+      };
+      const newVerification = {
+        code: 'code',
+      };
+
+      const newUser = {
+        verified: false,
+        email: editProfileArgs.input.email,
+      };
+
+      // 값을 던져주는 파트
+      userRepository.findOne.mockResolvedValue(oldUser);
+      // create는 promise를 리턴하지 않음
+      // save가 promise를 리턴
+      verificationRepostiory.create.mockReturnValue(newVerification);
+      verificationRepostiory.save.mockResolvedValue(newVerification);
+
+      // 실행파트
+      await service.editProfile(editProfileArgs.userId, editProfileArgs.input);
+
+      // 테스트파트
+      expect(userRepository.findOne).toHaveBeenCalledTimes(1);
+      expect(userRepository.findOne).toHaveBeenCalledWith({
+        where: { id: editProfileArgs.userId },
+      });
+
+      expect(verificationRepostiory.create).toHaveBeenCalledWith({
+        user: newUser,
+      });
+      expect(verificationRepostiory.save).toHaveBeenCalledWith(newVerification);
+      expect(mailService.sendVerificationEmail).toHaveBeenCalledWith(
+        newUser.email,
+        newVerification.code,
+      );
+    });
+
+    it('should change password', async () => {
+      const changePasswordArgs = {
+        userId: 1,
+        input: { password: 'newpassword' },
+      };
+
+      userRepository.findOne.mockResolvedValue({ password: 'oldpassword' });
+      const result = await service.editProfile(
+        changePasswordArgs.userId,
+        changePasswordArgs.input,
+      );
+      expect(userRepository.save).toHaveBeenCalledTimes(1);
+      expect(userRepository.save).toHaveBeenCalledWith(
+        changePasswordArgs.input,
+      );
+      expect(result).toEqual({ ok: true });
+    });
+
+    it('should fail on exception', async () => {
+      userRepository.findOne.mockResolvedValue(new Error());
+      const result = await service.editProfile(1, { email: '111@naver.com' });
+      expect(result).toEqual({ ok: false, error: 'Can not update profile' });
+    });
+  });
   it.todo('verifyEmai');
 });
