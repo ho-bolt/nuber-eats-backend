@@ -18,11 +18,13 @@ export class JwtMiddleware implements NestMiddleware {
       try {
         const decoded = this.jwtService.verify(token.toString());
         if (typeof decoded === 'object' && decoded.hasOwnProperty('id')) {
-          const user = await this.userService.findById(decoded['id']);
+          const { user, ok } = await this.userService.findById(decoded['id']);
+          if (ok) {
+            req['user'] = user;
+          }
           // 찾은 유저를 request object에 붙여서 보낸다.
           // 그래서 이 미들웨어로 인해 request object를 모든 resolver에서 사용할 수 있다.
           // 이거 이후 app.module의 context에 request 객체가 간다.
-          req['user'] = user;
         }
       } catch (e) {}
     }

@@ -100,6 +100,12 @@ export class UsersService {
       if (email) {
         user.email = email;
         user.verified = false;
+        // 테스트코드에서 알아낸 에러
+        // 유저와 verification은 1대1 관계이다.
+        // 현재 이메일을 수정할 때마다 또 다른 verification을 만들고 있어 unique key 제약조건에 위반된 에러가 발생한다.
+        // 따라서 이메일을 수정할 때는 그전에 있는 verificiation을 삭제해주어야 한다.
+        this.verifications.delete({ user: { id: user.id } }); // 해당하는 유저의 아이디를 가진 모든 verificiation을 삭제
+
         const varification = await this.verifications.save(
           this.verifications.create({ user }),
         ); // 유저가 email를 변경할 때도 verification을 생성한다.
@@ -113,6 +119,7 @@ export class UsersService {
         ok: true,
       };
     } catch (error) {
+      console.log(error);
       return {
         ok: false,
         error: 'Can not update profile',
