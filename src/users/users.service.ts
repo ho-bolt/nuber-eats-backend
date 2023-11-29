@@ -97,7 +97,6 @@ export class UsersService {
   ): Promise<EditProfileOutput> {
     try {
       const user = await this.users.findOne({ where: { id: userId } });
-      console.log(user);
       if (email) {
         user.email = email;
         user.verified = false;
@@ -138,7 +137,7 @@ export class UsersService {
       }
       return { ok: false, error: 'Verification not Found' };
     } catch (error) {
-      return { ok: false, error };
+      return { ok: false, error: 'Could not verify email' };
     }
   }
 }
