@@ -1,9 +1,21 @@
-import { ArgsType, Field, InputType, OmitType } from '@nestjs/graphql';
-import { IsString, IsBoolean, Length } from 'class-validator';
+import { Field, InputType, ObjectType, PickType } from '@nestjs/graphql';
 import { Restaurant } from '../entities/restaurant.entity';
+import { CoreOutput } from 'src/common/dtos/output.dto';
 
 @InputType()
-export class CreateRestaurantDto extends OmitType(Restaurant, ['id']) {}
+export class CreateRestaurantInput extends PickType(Restaurant, [
+  'name',
+  'coverImage',
+  'address',
+]) {
+  @Field((type) => String)
+  categoryName: string;
+}
+// 레스토랑 만들 때 카테고리에 있는 건 만들면 안됨
+// 사람들이 restaurant owner를 설정할 수 없게 만들기 위해 owner도 빼줌
+
+@ObjectType()
+export class CreateRestaurantOutput extends CoreOutput {}
 
 // InputType 은 하나의 object
 
