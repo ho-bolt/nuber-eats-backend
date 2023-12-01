@@ -112,7 +112,7 @@ Related to: #48, #45
 
 The backend of Uber Eats Clone
 
-## 🧑 User Entity :
+## 🧑 User Entity:
 
 - id
 - createdAt
@@ -127,6 +127,13 @@ The backend of Uber Eats Clone
 - Create Account
 - Login
 - Logout
+
+## 🍔 Restaurant Entity:
+
+- name
+- category
+- address
+- coverImage
 
 ### 📜 인증처리 순서
 
@@ -170,3 +177,29 @@ Partial Type,
 typeof : 객체 데이터를 객체 타입으로 변환
 
 ```
+
+2. Entity
+
+ManyToOne
+이 필드 를 가진 엔티티는 1:N 관계에서 N이다.
+즉 여기서는 하나의 식당은 하나의 카테고리를 가질 수 있고
+하나의 카테고리는 하나의 식당을 가질 수 있다.  
+그래서 이 필드는 restaurant에 있고 "OneToMany" 는 category에 있다.
+
+- 모든 엔티티를 추가하면 app.module에 추가해줘야 한다.
+
+## 현재 엔티티들의 관계
+
+카테고리는 여러 식당을 가질 수 있다. OneToMany
+식당은 하나의 카테고리를 갖는다. ManyToOne
+식당은 하나의 오너를 갖는다. ManyToOne
+오너는 여러 식당을 가질 수 있다. OneToMany
+
+3. Restaurant Model을 app.module에 추가하면서 에러 발생
+   Error: Schema must contain uniquely named types but contains multiple types named "Category".
+
+이 에러가 발생한 이유는 모든 스키마에 있는 type은 한 번씩만 정의되어야 한다.
+근데 Category type을 보면 ObjectType과 InputType이 2번 정의되어 있다.
+여기에 Restaurant에도 다른 Category field가 있어서 문제가 생기는 것
+따라서 이때 InputType에 이름을 바꿔줄 수 있다.
+즉 해당 에러가 난 이유는 ObjectType과 InputType이 같은 name을 사용하고 있었기 때문이다.
