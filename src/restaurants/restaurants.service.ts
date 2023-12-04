@@ -25,7 +25,7 @@ export class RestaurantService {
     createRestaurantInput: CreateRestaurantInput,
   ): Promise<CreateRestaurantOutput> {
     try {
-      const newRestaurant = this.restaurants.create(createRestaurantInput); // create는 instance를 생성
+      const newRestaurant = this.restaurants.create(createRestaurantInput); // create는 instance를 생성하지만 db엔 저장하지 않음
       newRestaurant.owner = owner;
       const categoryName = createRestaurantInput.categoryName
         .trim()
@@ -41,6 +41,7 @@ export class RestaurantService {
         newRestaurant.category = category;
       }
       await this.restaurants.save(newRestaurant);
+      console.log('!!!', newRestaurant);
       return {
         ok: true,
       };

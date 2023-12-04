@@ -6,7 +6,8 @@ import {
   CreateRestaurantOutput,
 } from './dtos/create-restaurant.dto';
 import { AuthUser } from 'src/auth/auth-user.decorator';
-import { User } from 'src/users/entities/users.entity';
+import { User, UserRole } from 'src/users/entities/users.entity';
+import { Role } from 'src/auth/role.decorator';
 
 @Resolver((of) => Restaurant)
 export class RestaurantResolver {
@@ -14,6 +15,7 @@ export class RestaurantResolver {
 
   //AuthUser를 넣어줌으로써 restaurant의 owner는 로그인한 유저가 된다.
   @Mutation((returns) => CreateRestaurantOutput)
+  @Role(['Owner'])
   async createRestaurant(
     @AuthUser() authUser: User,
     @Args('input') createRestaurantInput: CreateRestaurantInput,

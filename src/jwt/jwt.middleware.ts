@@ -2,7 +2,6 @@ import { NestMiddleware } from '@nestjs/common';
 import { NextFunction } from 'express';
 import { Injectable } from '@nestjs/common/decorators';
 import { JwtService } from './jwt.service';
-import { UsersResolver } from 'src/users/users.resolver';
 import { UsersService } from 'src/users/users.service';
 
 @Injectable()
