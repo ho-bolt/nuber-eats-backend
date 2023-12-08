@@ -37,7 +37,10 @@ export class CategoryService {
     });
   }
 
-  async findCategoryBySlug({ slug }: CategoryInput): Promise<CategoryOutput> {
+  async findCategoryBySlug({
+    slug,
+    page,
+  }: CategoryInput): Promise<CategoryOutput> {
     try {
       const category = await this.categories.findOne({
         where: { slug },
@@ -49,9 +52,17 @@ export class CategoryService {
           error: 'Category not found',
         };
       }
+      const restaurants = await this.restaurants.find({
+        where: { category: { id: category.id } },
+        take: 5,
+        skip: (page - 1) * 5, // 2번째 나온 페이지에는 첫 번째 보여준 꺼 빼고 그 다음 25개를 보여주니까 이렇게 됨
+      });
+      category.restaurants = restaurants;
+      const totalResults = await this.countRestaurant(category);
       return {
         ok: true,
         category,
+        totalPages: Math.ceil(totalResults / 5),
       };
     } catch {
       return {
