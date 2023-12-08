@@ -21,6 +21,7 @@ import { MailModule } from './mail/mail.module';
 import { Restaurant } from './restaurants/entities/restaurant.entity';
 import { Category } from './restaurants/entities/category.entity';
 import { RestaurantsModule } from './restaurants/restaurants.module';
+import { CategoryModule } from './category/category.module';
 // javascript 패키지를 import from 으로 사용하는 방법
 
 @Module({
@@ -70,6 +71,7 @@ import { RestaurantsModule } from './restaurants/restaurants.module';
       domain: process.env.MAILGUN_DOMAIN_NAME,
       fromEmail: process.env.MAILGUN_FROM_EMAIL,
     }),
+    CategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
