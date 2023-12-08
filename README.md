@@ -144,6 +144,7 @@ The backend of Uber Eats Clone
 - See Restaurants by Category (pagination)
 - See Restaurants(Pagination)
 - See Restaurant
+- Search Restaurant
 
 - Create Dish
 - Edit Dish

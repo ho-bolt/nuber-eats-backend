@@ -16,6 +16,15 @@ import {
   DeleteRestaurantInput,
   DeleteRestaurantOutput,
 } from './dtos/delete-restaurant.dto';
+import { RestaurantsInput, RestaurantsOutput } from './dtos/restaurants.dto';
+import {
+  SeeRestaurantInput,
+  SeeRestaurantOutput,
+} from './dtos/see-restaurant.dto';
+import {
+  SearchRestaurantInput,
+  SearchRestaurantOutput,
+} from './dtos/search-restaurant.dto';
 
 @Resolver((of) => Restaurant)
 export class RestaurantResolver {
@@ -54,5 +63,26 @@ export class RestaurantResolver {
       owner,
       deleteRestaurantOutput,
     );
+  }
+
+  @Query((returns) => RestaurantsOutput)
+  restaurants(
+    @Args('input') restaurantInput: RestaurantsInput,
+  ): Promise<RestaurantsOutput> {
+    return this.restaurantService.allRestaurants(restaurantInput);
+  }
+
+  @Query((returns) => SeeRestaurantOutput)
+  seeRestaurant(
+    @Args('input') restaurantInput: SeeRestaurantInput,
+  ): Promise<SeeRestaurantOutput> {
+    return this.restaurantService.seeRestaurantById(restaurantInput);
+  }
+
+  @Query((returns) => SearchRestaurantOutput)
+  searchRestaurant(
+    @Args('input') searchRestaurantInput: SearchRestaurantInput,
+  ): Promise<SearchRestaurantOutput> {
+    return this.restaurantService.searchRestaurantByName(searchRestaurantInput);
   }
 }
