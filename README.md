@@ -150,6 +150,11 @@ The backend of Uber Eats Clone
 - Edit Dish
 - Delete Dish
 
+- Orders CRUD
+- Orders subscription (Owner, Customer, Delivery)
+
+- Payments(Cron job) paddle
+
 ### 📜 인증처리 순서
 
 token in header-> verify token in middleware -> apollo server context -> authorization guard -> resolver -> made decorator -> change context to graphql context
