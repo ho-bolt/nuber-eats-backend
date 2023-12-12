@@ -5,11 +5,14 @@ import {
   Column,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   RelationId,
 } from 'typeorm';
 import { Category } from './category.entity';
 import { User } from 'src/users/entities/users.entity';
+import { Dish } from './dish.entity';
+import { Order } from 'src/orders/entities/order.entity';
 
 @InputType('RestaurantInputType', { isAbstract: true }) // 이 inputType이 스키마에 포함되지 않길 원한다는 뜻 그리고 이걸 어딘가에서 복사해서 쓴다는 의미
 @ObjectType()
@@ -47,8 +50,16 @@ export class Restaurant extends CoreEntity {
   })
   owner: User;
 
+  @Field((type) => [Order])
+  @OneToMany((type) => Order, (order) => order.restaurant)
+  orders: Order[];
+
   @RelationId((restaurant: Restaurant) => restaurant.owner)
   ownerId: number;
+
+  @Field((type) => Dish)
+  @OneToMany((type) => Dish, (dish) => dish.restaurant)
+  menu: Dish[];
 }
 
 // Graphql 에서 @ObjectType

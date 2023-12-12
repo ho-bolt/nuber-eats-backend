@@ -22,6 +22,9 @@ import { Restaurant } from './restaurants/entities/restaurant.entity';
 import { Category } from './restaurants/entities/category.entity';
 import { RestaurantsModule } from './restaurants/restaurants.module';
 import { CategoryModule } from './category/category.module';
+import { Dish } from './restaurants/entities/dish.entity';
+import { OrdersModule } from './orders/orders.module';
+import { Order } from './orders/entities/order.entity';
 // javascript 패키지를 import from 으로 사용하는 방법
 
 @Module({
@@ -58,7 +61,7 @@ import { CategoryModule } from './category/category.module';
       synchronize: process.env.NODE_ENV !== 'prod', // typeOrm이 계속 entity를 동기화 시킴 따라서 개발할 때만 동기화 시키고 아닐때는 동기화 방지
       logging:
         process.env.NODE_ENV !== 'prod' && process.env.NODE_ENV !== 'test',
-      entities: [User, Verification, Restaurant, Category],
+      entities: [User, Verification, Restaurant, Category, Dish, Order],
     }),
     UsersModule,
     AuthModule,
@@ -72,6 +75,7 @@ import { CategoryModule } from './category/category.module';
       fromEmail: process.env.MAILGUN_FROM_EMAIL,
     }),
     CategoryModule,
+    OrdersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
