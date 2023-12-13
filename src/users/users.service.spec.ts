@@ -1,7 +1,7 @@
 import { Test } from '@nestjs/testing';
 import { UsersService } from './users.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { User } from './entities/users.entity';
+import { User, UserRole } from './entities/users.entity';
 import { Verification } from './entities/verification.entity';
 import { JwtService } from 'src/jwt/jwt.service';
 import { MailService } from 'src/mail/mail.service';
@@ -75,9 +75,9 @@ describe('UserService', () => {
   // 계정 생성 테스트
   describe('createAccount', () => {
     const createAccountArgs = {
-      email: 'asdf@naver.com  ',
+      email: 'asdf@naver.com',
       password: '1234',
-      role: 0,
+      role: UserRole.Client,
     };
     it('should fail if user exists', async () => {
       // 반환값을 속임 (가짜 변수로 )
