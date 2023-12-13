@@ -7,7 +7,7 @@ import { Restaurant } from './restaurant.entity';
 // Dish choice를 만든 이유 choices가 주문 값을 변경할 수도 있기 때문
 @InputType('DishChoiceInputType', { isAbstract: true })
 @ObjectType()
-class DishChoice {
+export class DishChoice {
   @Field((type) => String)
   name: string;
   @Field((type) => Int, { nullable: true })
@@ -16,7 +16,7 @@ class DishChoice {
 
 @InputType('DishInputType', { isAbstract: true })
 @ObjectType()
-class DishOption {
+export class DishOption {
   @Field((type) => String)
   name: string;
 

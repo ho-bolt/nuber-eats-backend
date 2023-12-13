@@ -28,8 +28,6 @@ import {
 } from './dtos/search-restaurant.dto';
 import { CreateDishInput, CreateDishOutput } from './dtos/create-dish.dto';
 import { Dish } from './entities/dish.entity';
-import { create } from 'domain';
-import { AuthUser } from 'src/auth/auth-user.decorator';
 import { EditDishInput, EditDishOutput } from './dtos/edit-dish-dto';
 import { DeleteDishInput, DeleteDishOutput } from './dtos/delete-dish.dto';
 
