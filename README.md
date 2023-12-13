@@ -223,3 +223,8 @@ ManyToOne
 여기에 Restaurant에도 다른 Category field가 있어서 문제가 생기는 것
 따라서 이때 InputType에 이름을 바꿔줄 수 있다.
 즉 해당 에러가 난 이유는 ObjectType과 InputType이 같은 name을 사용하고 있었기 때문이다.
+
+### 수정해 볼것
+
+- 현재 음식의 옵션( 양 추가, 맛 선택 )과 같은 것은 json으로 받아서 처리중
+  💨 relationship으로 바꿔보기
