@@ -19,9 +19,17 @@ import {
 import { OrderItem } from './order-item.entity';
 import { IsEnum, IsNumber } from 'class-validator';
 
+/*
+Cooking, Cooked = 음식점 주인이 수정가능 
+
+PickedUp, Delivered = 배달원이 수정 가능 
+
+*/
+
 export enum OrderStatus {
   Pending = 'Pending',
   Cooking = 'Cooking',
+  Cooked = 'Cooked',
   PickedUp = 'PickedUp',
   Delivered = 'Delivered',
 }
