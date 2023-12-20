@@ -1,4 +1,3 @@
-import { Res } from '@nestjs/common';
 import {
   Field,
   Float,
@@ -15,12 +14,12 @@ import {
   JoinTable,
   ManyToMany,
   ManyToOne,
-  OneToMany,
+  RelationId,
 } from 'typeorm';
 import { OrderItem } from './order-item.entity';
 import { IsEnum, IsNumber } from 'class-validator';
 
-enum OrderStatus {
+export enum OrderStatus {
   Pending = 'Pending',
   Cooking = 'Cooking',
   PickedUp = 'PickedUp',
@@ -33,12 +32,15 @@ registerEnumType(OrderStatus, { name: 'OrderStatus' });
 @ObjectType()
 @Entity()
 export class Order extends CoreEntity {
-  @Field((type) => User)
+  @Field((type) => User, { nullable: true })
   @ManyToOne((type) => User, (user) => user.orders, {
     onDelete: 'SET NULL',
     nullable: true,
   })
   customer?: User;
+
+  @RelationId((order: Order) => order.customer)
+  customerId: number;
 
   @Field((type) => User, { nullable: true }) // 주문한 즉시는 배달원이 없기 때문
   @ManyToOne((type) => User, (user) => user.rides, {
@@ -46,6 +48,9 @@ export class Order extends CoreEntity {
     nullable: true,
   })
   driver?: User;
+
+  @RelationId((order: Order) => order.driver)
+  driverId: number;
 
   @Field((type) => Restaurant, { nullable: true })
   @ManyToOne((type) => Restaurant, (restaurant) => restaurant.orders, {
