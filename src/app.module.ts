@@ -34,7 +34,9 @@ import { OrderItem } from './orders/entities/order-item.entity';
       driver: ApolloDriver,
       installSubscriptionHandlers: true,
       autoSchemaFile: true,
-      context: ({ req }) => ({ user: req['user'] }), // 공유
+      context: ({ req }) => {
+        return { user: req['user'] }; // web socket은 request가 없고 connection이 있다.
+      }, // 공유
     }),
     ConfigModule.forRoot({
       isGlobal: true,

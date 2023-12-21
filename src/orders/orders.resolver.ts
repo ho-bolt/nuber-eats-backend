@@ -52,9 +52,19 @@ export class OrderResolver {
     return this.orderService.editOrder(user, editOrderInput);
   }
 
+  @Mutation((returns) => Boolean)
+  testSubscription() {
+    pubsub.publish('something_changed', {
+      orderSubscription: 'something ready',
+    });
+    return true;
+  }
+
+  // 트리거(something_changed)와 publish하는 이름이 같아야 한다.
+
   @Subscription((returns) => String)
   orderSubscription() {
     const SOMETHING_CHANGED_TOPIC = 'something_changed';
-    return pubsub.asyncIterator(SOMETHING_CHANGED_TOPIC);
+    return pubsub.asyncIterator('something_changed');
   }
 }
