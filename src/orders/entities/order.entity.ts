@@ -21,9 +21,7 @@ import { IsEnum, IsNumber } from 'class-validator';
 
 /*
 Cooking, Cooked = 음식점 주인이 수정가능 
-
 PickedUp, Delivered = 배달원이 수정 가능 
-
 */
 
 export enum OrderStatus {
@@ -47,7 +45,10 @@ export class Order extends CoreEntity {
   })
   customer?: User;
 
-  @RelationId((order: Order) => order.customer)
+  // @RelationId((order: Order) => order.customer)
+  // customer_Id: number;
+
+  @Column({ nullable: true })
   customerId: number;
 
   @Field((type) => User, { nullable: true }) // 주문한 즉시는 배달원이 없기 때문
@@ -57,7 +58,10 @@ export class Order extends CoreEntity {
   })
   driver?: User;
 
-  @RelationId((order: Order) => order.driver)
+  // @RelationId((order: Order) => order.driver)
+  // driverId: number;
+
+  @Column({ nullable: true })
   driverId: number;
 
   @Field((type) => Restaurant, { nullable: true })

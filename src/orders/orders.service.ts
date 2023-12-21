@@ -143,20 +143,20 @@ export class OrderService {
         ok: true,
         orders,
       };
-    } catch {
+    } catch (error) {
       return {
         ok: false,
-        error: 'Could not get order',
+        error,
       };
     }
   }
   // Role 구분 함수
   CheckRole(user: User, order: Order): boolean {
     let canSee = true;
-    if (user.role === UserRole.Client && order.customerId !== user.id) {
+    if (user.role === UserRole.Client && order.customer.id !== user.id) {
       canSee = false;
     }
-    if (user.role === UserRole.Delivery && order.driverId !== user.id) {
+    if (user.role === UserRole.Delivery && order.driver.id !== user.id) {
       canSee = false;
     }
     if (user.role === UserRole.Owner && order.restaurant.ownerId !== user.id) {
