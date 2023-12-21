@@ -1,3 +1,4 @@
+import { Context } from 'vm';
 import {
   Module,
   NestModule,
@@ -26,17 +27,28 @@ import { Dish } from './restaurants/entities/dish.entity';
 import { OrdersModule } from './orders/orders.module';
 import { Order } from './orders/entities/order.entity';
 import { OrderItem } from './orders/entities/order-item.entity';
+import { CommonModule } from './common/common.module';
 // javascript 패키지를 import from 으로 사용하는 방법
-
 @Module({
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       installSubscriptionHandlers: true,
       autoSchemaFile: true,
-      context: ({ req }) => {
-        return { user: req['user'] }; // web socket은 request가 없고 connection이 있다.
-      }, // 공유
+      subscriptions: {
+        'subscriptions-transport-ws': {
+          onConnect: (connectionParams) => {
+            const authToken = connectionParams['x-jwt'];
+
+            if (!authToken) {
+              throw new Error('Token is not vaild');
+            }
+            const token = authToken;
+            return { token };
+          },
+        },
+      },
+      context: ({ req }) => ({ token: req.headers['x-jwt'] }),
     }),
     ConfigModule.forRoot({
       isGlobal: true,
@@ -88,20 +100,23 @@ import { OrderItem } from './orders/entities/order-item.entity';
     }),
     CategoryModule,
     OrdersModule,
+    CommonModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
+export class AppModule {}
+
 // 여기 미들웨어에 먼저 도착
-export class AppModule implements NestModule {
-  // 이 configure 함수로 미들웨어 구성
-  configure(consumer: MiddlewareConsumer) {
-    consumer.apply(JwtMiddleware).forRoutes({
-      path: '/graphql',
-      method: RequestMethod.POST,
-    });
-  }
-}
+// export class AppModule implements NestModule {
+//   // 이 configure 함수로 미들웨어 구성
+//   configure(consumer: MiddlewareConsumer) {
+//     consumer.apply(JwtMiddleware).forRoutes({
+//       path: '/graphql',
+//       method: RequestMethod.POST,
+//     });
+//   }
+// }
 
 // static module -> 현재 UsersModule이나 JwtModule 처럼 아무런 설정이 없는 정적인 모듈
 // dynamic module -> TypeOrmModule처럼 설정이 있는 걸 동적인 모듈
