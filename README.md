@@ -153,6 +153,10 @@ The backend of Uber Eats Clone
 - Orders CRUD
 - Orders subscription (Owner, Customer, Delivery)
 
+  - Pending Orders(s:newOrder) (t:createOrder(newOrder))
+  - Order status (Customer, Delivery, Owner) (s:orderupdate) (t:editOrder(orderUpdate))
+  - Pending Pickup Order(Delivery) (s:orderUpdate) (t: editOrder(orderUpdate))
+
 - Payments(Cron job) paddle
 
 ### 📜 인증처리 순서

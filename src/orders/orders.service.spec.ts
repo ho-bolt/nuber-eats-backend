@@ -118,6 +118,7 @@ describe('OrderService', () => {
         error: 'Dish not found',
       });
     });
+
     it('should cost $13 for order', async () => {
       const orderArgs = {
         restaurantId: 1,

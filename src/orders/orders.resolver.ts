@@ -8,7 +8,7 @@ import { Role } from 'src/auth/role.decorator';
 import { GetOrdersInput, GetOrdersOutput } from './dtos/get-orders.dto';
 import { GetOrderOutput, GetOrderInput } from './dtos/get-order.dto';
 import { EditOrderInput, EditOrderOutput } from './dtos/edit-order.dto';
-import { PUB_SUB } from 'src/common/common.constants';
+import { NEW_PENDING_ORDER, PUB_SUB } from 'src/common/common.constants';
 import { Inject } from '@nestjs/common';
 import { PubSub } from 'graphql-subscriptions';
 
@@ -54,24 +54,15 @@ export class OrderResolver {
   ): Promise<EditOrderOutput> {
     return this.orderService.editOrder(user, editOrderInput);
   }
-
-  @Mutation((returns) => Boolean)
-  async testSubscription(@Args('id') id: number) {
-    await this.pubSub.publish('something_changed', {
-      orderSubscription: id,
-    });
-    return true;
-  }
-
-  // 트리거(something_changed)와 publish하는 이름이 같아야 한다.
-  @Subscription((returns) => String, {
-    filter({ orderSubscription }, { id }) {
-      return orderSubscription === id;
+  @Subscription((returns) => Order, {
+    filter: (payload, _, context) => {
+      console.log(payload);
+      return true;
     },
   })
-  @Role(['Any'])
-  orderSubscription(@Args('id') id: number) {
-    return this.pubSub.asyncIterator('something_changed');
+  @Role(['Owner'])
+  pendingOrders() {
+    return this.pubSub.asyncIterator(NEW_PENDING_ORDER);
   }
 }
 
@@ -87,4 +78,9 @@ PubSub은 진행중인 서버말고 다른 분리된 서버에 저장하라
 filtering을 해야하는 이유 
 모든 update를 listen할 필요가 없기 때문 
 filter하지 않으면 subscription은 노의미
+
+
+순서 
+
+subscription function에서 variables가지고 asynclterator를 return한다. 
 */
