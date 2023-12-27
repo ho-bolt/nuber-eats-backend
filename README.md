@@ -177,6 +177,12 @@ TypeOrm의 save() 함수는 없을 때는 entity를 생성하지만 이미 존�
 
 ### ✏ 메모할 거
 
+eager relation : db에서 entity를 load할 때마다 자동으로 load되는 relationship을 말한다.
+
+- db에서 entity를 load할 때마다 자동으로 load되는 relationship을 말한다.
+
+lazy relation : 한 번 access하면 load되는 것
+
 #### 테스트 코드
 
 1. MockRepository
