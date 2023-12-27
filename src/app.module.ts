@@ -28,6 +28,8 @@ import { OrdersModule } from './orders/orders.module';
 import { Order } from './orders/entities/order.entity';
 import { OrderItem } from './orders/entities/order-item.entity';
 import { CommonModule } from './common/common.module';
+import { PaymentsModule } from './payments/payments.module';
+import { Payment } from './payments/entities/payment.entity';
 // javascript 패키지를 import from 으로 사용하는 방법
 @Module({
   imports: [
@@ -85,6 +87,7 @@ import { CommonModule } from './common/common.module';
         Dish,
         Order,
         OrderItem,
+        Payment,
       ],
     }),
     UsersModule,
@@ -101,6 +104,7 @@ import { CommonModule } from './common/common.module';
     CategoryModule,
     OrdersModule,
     CommonModule,
+    PaymentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
