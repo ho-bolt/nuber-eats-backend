@@ -18,7 +18,6 @@ export class Payment extends CoreEntity {
   @ManyToOne((type) => User, (user) => user.payments, {
     onDelete: 'SET NULL',
     nullable: true,
-    eager: true,
   })
   user?: User;
 
