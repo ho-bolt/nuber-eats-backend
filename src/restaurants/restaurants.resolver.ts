@@ -41,7 +41,6 @@ export class RestaurantResolver {
     @AuthUser() authUser: User,
     @Args('input') createRestaurantInput: CreateRestaurantInput,
   ): Promise<CreateRestaurantOutput> {
-    console.log('레스토랑 생성');
     return this.restaurantService.createRestaurant(
       authUser,
       createRestaurantInput,

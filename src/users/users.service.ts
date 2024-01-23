@@ -60,6 +60,7 @@ export class UsersService {
         select: ['id', 'password'],
       }); // select 옵션을 주면 확실하게 그 컬럼을 넣는다.
       // findOne 옵션은 select에 옵션에 넣은 컬럼만 반환하기 때문에 비밀번호 외에도 id도 넣어주어야 한다.
+      console.log('user?', user);
       if (!user) {
         return { ok: false, error: 'User not found' };
       }

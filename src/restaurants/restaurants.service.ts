@@ -153,8 +153,8 @@ export class RestaurantService {
   async allRestaurants({ page }: RestaurantsInput): Promise<RestaurantsOutput> {
     try {
       const [results, totalResults] = await this.restaurants.findAndCount({
-        skip: (page - 1) * 5,
-        take: 5,
+        skip: (page - 1) * 6,
+        take: 6,
         order: {
           isPromoted: 'DESC',
         },
@@ -162,7 +162,7 @@ export class RestaurantService {
       return {
         ok: true,
         results,
-        totalPages: Math.ceil(totalResults / 5),
+        totalPages: Math.ceil(totalResults / 6),
         totalResults,
       };
     } catch (error) {
