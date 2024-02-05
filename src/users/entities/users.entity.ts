@@ -6,7 +6,14 @@ import {
 } from '@nestjs/graphql';
 import { InternalServerErrorException } from '@nestjs/common/exceptions';
 import { CoreEntity } from 'src/common/entities/core.entity';
-import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany } from 'typeorm';
+import {
+  BeforeInsert,
+  BeforeUpdate,
+  Column,
+  Entity,
+  JoinColumn,
+  OneToMany,
+} from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { IsBoolean, IsEmail, IsEnum, IsString } from 'class-validator';
 import { Restaurant } from 'src/restaurants/entities/restaurant.entity';

@@ -1,4 +1,4 @@
-import { Field, InputType, ObjectType, PickType } from '@nestjs/graphql';
+import { Field, InputType, Int, ObjectType, PickType } from '@nestjs/graphql';
 import { Restaurant } from '../entities/restaurant.entity';
 import { CoreOutput } from 'src/common/dtos/output.dto';
 
@@ -15,7 +15,10 @@ export class CreateRestaurantInput extends PickType(Restaurant, [
 // 사람들이 restaurant owner를 설정할 수 없게 만들기 위해 owner도 빼줌
 
 @ObjectType()
-export class CreateRestaurantOutput extends CoreOutput {}
+export class CreateRestaurantOutput extends CoreOutput {
+  @Field((type) => Int)
+  restaurantId?: number;
+}
 
 // InputType 은 하나의 object
 

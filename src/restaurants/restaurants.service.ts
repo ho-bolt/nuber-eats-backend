@@ -30,6 +30,11 @@ import { CreateDishInput, CreateDishOutput } from './dtos/create-dish.dto';
 import { Dish } from './entities/dish.entity';
 import { EditDishInput, EditDishOutput } from './dtos/edit-dish-dto';
 import { DeleteDishInput, DeleteDishOutput } from './dtos/delete-dish.dto';
+import {
+  MyRestaurantInput,
+  MyRestaurantOutput,
+} from './dtos/my-restaurant.dto';
+import { MyRestaurantsOutput } from './dtos/my-restaurants.dto';
 
 @Injectable()
 export class RestaurantService {
@@ -59,11 +64,12 @@ export class RestaurantService {
       await this.restaurants.save(newRestaurant);
       return {
         ok: true,
+        restaurantId: newRestaurant.id,
       };
     } catch (e) {
       return {
         ok: false,
-        error: e,
+        error: 'Could not create Restaurant',
       };
     }
   }
@@ -325,6 +331,43 @@ export class RestaurantService {
       return {
         ok: false,
         error: 'Could not delete dishes',
+      };
+    }
+  }
+  async myRestaurant(
+    owner: User,
+    { id }: MyRestaurantInput,
+  ): Promise<MyRestaurantOutput> {
+    try {
+      const restaurant = await this.restaurants.findOne({
+        where: { owner: { id: owner.id } },
+        relations: ['menu', 'orders'],
+      });
+      return {
+        restaurant,
+        ok: true,
+      };
+    } catch (error) {
+      return {
+        ok: false,
+        error,
+      };
+    }
+  }
+
+  async myRestaurants(owner: User): Promise<MyRestaurantsOutput> {
+    try {
+      const restaurants = await this.restaurants.find({
+        where: { owner: { id: owner.id } },
+      });
+      return {
+        restaurants,
+        ok: true,
+      };
+    } catch (err) {
+      return {
+        ok: false,
+        error: err,
       };
     }
   }
